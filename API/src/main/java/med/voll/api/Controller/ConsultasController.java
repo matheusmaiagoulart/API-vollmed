@@ -1,5 +1,6 @@
 package med.voll.api.Controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import med.voll.api.Consultas.AgendaDeConsultas;
 import med.voll.api.Consultas.DadosAgendamentoConsulta;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@SecurityRequirement(name = "bearer-key")
 @RequestMapping("/consultas")
 public class ConsultasController {
 
@@ -20,8 +22,8 @@ public class ConsultasController {
     @PostMapping
     @Transactional
     public ResponseEntity agendarConsulta(@RequestBody @Valid DadosAgendamentoConsulta dados){
-        agenda.agendarConsulta(dados); //metodo da nossa classe service que faz as validacoes das regras de negocio
-        return ResponseEntity.ok(new DadosDetalhamentoConsulta( null,dados.idMedico(), dados.idPaciente(), dados.data()));
+        var dto = agenda.agendarConsulta(dados); //metodo da nossa classe service que faz as validacoes das regras de negocio
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping

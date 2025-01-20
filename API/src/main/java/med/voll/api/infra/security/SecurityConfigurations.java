@@ -25,7 +25,8 @@ public class SecurityConfigurations {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 . authorizeHttpRequests(req -> { //permitindo passar pela URL de login via metodo POST sem precisar de token, para conseguir ser gerado a partir dessa rota
-                    req.requestMatchers("/login").permitAll(); //parte do codigo para liberar login
+                    req.requestMatchers("/login").permitAll();//parte do codigo para liberar login
+                            req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(secutiryFilter, UsernamePasswordAuthenticationFilter.class)//esta adicionando um filtro antes do filtro que o spring faz, se nao ele nao é chamado

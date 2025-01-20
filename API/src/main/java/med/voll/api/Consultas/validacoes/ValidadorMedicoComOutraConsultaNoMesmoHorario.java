@@ -17,9 +17,11 @@ public class ValidadorMedicoComOutraConsultaNoMesmoHorario implements ValidadorA
 
         var consultaMesmoHorario = consultaRepository.existsByMedicoIdAndData(dados.idMedico(), dados.data());
 
-        if(!consultaMesmoHorario){
+        if(consultaMesmoHorario)//se for true (tem outra consulta)
+             {
             throw new ValidacaoException("O médico já tem uma consulta neste mesmo horário!" +
                     "Por favor, escolha outro horário!");
+
         }
 
     }

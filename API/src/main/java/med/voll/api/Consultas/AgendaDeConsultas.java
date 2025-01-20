@@ -23,10 +23,10 @@ public class AgendaDeConsultas {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-
+    @Autowired
     private List<ValidadorAgendamentoDeConsulta> validadores; //Spring identifica todas as classes que utilizam essa interface e vai instancialas automatico
 
-    public void agendarConsulta(DadosAgendamentoConsulta dados){
+    public DadosDetalhamentoConsulta agendarConsulta(DadosAgendamentoConsulta dados){
 
         if(!pacienteRepository.existsById(dados.idPaciente())){
             throw new ValidacaoException("Esse paciente não existe! Por favor, passe um iD válido!");
@@ -47,6 +47,7 @@ public class AgendaDeConsultas {
 
         consultaRepository.save(consulta);
 
+        return new DadosDetalhamentoConsulta(consulta);
 
     }
 
